@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>
+            Project
+        </title>
+    </head>
+
+    <body background="./back.jpg" >
+        
+        
+        
+        
+        <div style="display: flex; " >
+             <img src="./pro.png" alt="" style=" width: 70px; height: 50px"> 
+            <input class="op" type="text";  style=" width: 450px; margin-left: 450px; height: 50px; border-style: none; border-radius: 10px; " placeholder="Search">
+            <button class="btn" style="height: 50px; border-style: none; border-radius: 10px; margin-left: 10px;">Search</button>
+            <button style="margin-left: 360px; background-color: red; border: white; border-style: none; border-radius: 10px;">Reset</button>
+        </div>
+        <div style="margin-top: 250px; background-color: rgb(182, 8, 8); height: 200px; display: flex; align-items: stretch;">
+            <div class="mon" style="background-color: yellow ; margin-left: 300px; width: 200px;"></div>
+            <div style=" background-color: blue; margin-left: 100px; margin-right: 80px; width: 200px;">hello</div>
+            <div style="background-color: chartreuse; margin-right: 60px; width: 200px;">hello</div>
+        </div>
+    </body>
+
+    <script>
+        const btn=document.querySelector(".btn");
+       const inp= document.querySelector('.op');
+       btn.addEventListener("click",f);
+       
+    async   function f(){
+    const c=inp.value;
+    console.log(c);
+    const name=await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${c}&appid=7a17bc0a25a48c3c1e744ca0cfc675c1`);
+    const n=await name.json();
+    const lat=n.city.coord.lat;
+const lon=n.city.coord.lon;
+ 
+    
+
+    const res= await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7a17bc0a25a48c3c1e744ca0cfc675c1`,{method:"GET"});
+
+    const a = await res.json();
+    console.log(a);
+    const l=a.list;
+    console.log(l[0].main.temp);
+    console.log(l[1].main.temp);
+    console.log(l[2].main.temp);
+    const w=l[8].weather;
+    console.log(w[0].description);
+    console.log(typeof(l[0].dt_txt));
+    
+    
+    
+ console.log(   l[0].main.temp-273);
+ const mon=document.querySelector('.mon');
+ mon.innerHTML=`<p>Date:${l[0].dt_txt}</p><p>Temp:${Math.round(l[8].main.temp-273)}</p><p>Humidity:${l[8].main.humidity}%</p><p>${w[0].description}</p>`;
+
+    
+
+
+
+       }
+      
+       
+
+    </script>
+</html>
